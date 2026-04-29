@@ -37,6 +37,9 @@ public class AuthController {
     
     @GetMapping("/me")
     public ResponseEntity<?> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails == null) {
+            return ResponseEntity.status(401).body(Map.of("error", "Not authenticated"));
+        }
         User user = authService.getCurrentUser(userDetails.getUsername());
         return ResponseEntity.ok(Map.of("id", user.getId(), "name", user.getName(), 
                 "email", user.getEmail(), "role", user.getRole()));
