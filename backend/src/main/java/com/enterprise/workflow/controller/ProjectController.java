@@ -4,8 +4,8 @@ import com.enterprise.workflow.dto.ProjectRequest;
 import com.enterprise.workflow.entity.Project;
 import com.enterprise.workflow.service.ProjectService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
@@ -20,9 +20,10 @@ public class ProjectController {
     }
     
     @PostMapping
-    public ResponseEntity<Project> create(@RequestBody ProjectRequest request, 
-            @AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.ok(projectService.create(request, userDetails.getUsername()));
+    public ResponseEntity<Project> create(@RequestBody ProjectRequest request) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth != null ? auth.getName() : "anonymous";
+        return ResponseEntity.ok(projectService.create(request, email));
     }
     
     @GetMapping
