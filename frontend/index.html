@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Workflow & Task Automation</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <nav class="navbar" id="navbar">
+            <div class="nav-brand">Enterprise Workflow</div>
+            <div class="nav-links" id="navLinks">
+                <a href="#" data-page="dashboard">Dashboard</a>
+                <a href="#" data-page="projects">Projects</a>
+                <a href="#" data-page="tasks">Tasks</a>
+                <a href="#" data-page="kanban">Kanban</a>
+                <a href="#" data-page="workflows">Workflows</a>
+                <a href="#" data-page="notifications">Notifications</a>
+            </div>
+            <div class="nav-user" id="navUser">
+                <span id="userName"></span>
+                <button id="logoutBtn">Logout</button>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div id="authPage" class="page">
+                <div class="auth-container">
+                    <div class="auth-tabs">
+                        <button class="auth-tab active" data-tab="login">Login</button>
+                        <button class="auth-tab" data-tab="register">Register</button>
+                    </div>
+                    <div id="loginForm" class="auth-form">
+                        <h2>Login</h2>
+                        <input type="email" id="loginEmail" placeholder="Email">
+                        <input type="password" id="loginPassword" placeholder="Password">
+                        <button id="loginBtnSubmit">Login</button>
+                    </div>
+                    <div id="registerForm" class="auth-form hidden">
+                        <h2>Register</h2>
+                        <input type="text" id="registerName" placeholder="Name">
+                        <input type="email" id="registerEmail" placeholder="Email">
+                        <input type="password" id="registerPassword" placeholder="Password">
+                        <select id="registerRole">
+                            <option value="EMPLOYEE">Employee</option>
+                            <option value="MANAGER">Manager</option>
+                            <option value="ADMIN">Admin</option>
+                        </select>
+                        <button id="registerBtnSubmit">Register</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="dashboardPage" class="page hidden">
+                <h1>Dashboard</h1>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total Projects</h3>
+                        <p id="statProjects">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Tasks</h3>
+                        <p id="statTasks">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Completed</h3>
+                        <p id="statCompleted">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>In Progress</h3>
+                        <p id="statInProgress">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Pending</h3>
+                        <p id="statPending">0</p>
+                    </div>
+                    <div class="stat-card overdue">
+                        <h3>Overdue</h3>
+                        <p id="statOverdue">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="projectsPage" class="page hidden">
+                <h1>Projects</h1>
+                <button id="newProjectBtn" class="btn primary">New Project</button>
+                <div id="projectsList" class="card-grid"></div>
+            </div>
+
+            <div id="tasksPage" class="page hidden">
+                <h1>Tasks</h1>
+                <button id="newTaskBtn" class="btn primary">New Task</button>
+                <div id="tasksList" class="task-list"></div>
+            </div>
+
+            <div id="kanbanPage" class="page hidden">
+                <h1>Kanban Board</h1>
+                <div class="kanban-board">
+                    <div class="kanban-column" data-status="TODO">
+                        <h3>To Do</h3>
+                        <div class="kanban-tasks" data-status="TODO"></div>
+                    </div>
+                    <div class="kanban-column" data-status="IN_PROGRESS">
+                        <h3>In Progress</h3>
+                        <div class="kanban-tasks" data-status="IN_PROGRESS"></div>
+                    </div>
+                    <div class="kanban-column" data-status="DONE">
+                        <h3>Done</h3>
+                        <div class="kanban-tasks" data-status="DONE"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="workflowsPage" class="page hidden">
+                <h1>Workflows</h1>
+                <button id="newWorkflowBtn" class="btn primary">New Workflow</button>
+                <div id="workflowsList" class="workflow-list"></div>
+            </div>
+
+            <div id="notificationsPage" class="page hidden">
+                <h1>Notifications</h1>
+                <button id="markAllReadBtn" class="btn">Mark All Read</button>
+                <div id="notificationsList" class="notification-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
