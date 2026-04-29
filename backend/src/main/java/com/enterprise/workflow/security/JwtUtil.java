@@ -37,7 +37,7 @@ public class JwtUtil {
                 .verifyWith(getSigningKey())
                 .build()
                 .parseSignedClaims(token)
-                .get_payload();
+                .getPayload();
     }
     
     public String extractEmail(String token) {
