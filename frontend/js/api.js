@@ -1,10 +1,13 @@
 const API_BASE = 'http://localhost:8080/api';
 
-let authToken = localStorage.getItem('token');
-
 const api = {
+    getAuthToken() {
+        return localStorage.getItem('token');
+    },
+    
     async request(endpoint, options = {}) {
         const url = API_BASE + endpoint;
+        const authToken = this.getAuthToken();
         const headers = {
             'Content-Type': 'application/json',
             ...options.headers
@@ -21,11 +24,16 @@ const api = {
             });
             
             if (!response.ok) {
-                const error = await response.json();
-                throw new Error(error.message || 'Request failed');
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.includes('application/json')) {
+                    const error = await response.json();
+                    throw new Error(error.message || 'Request failed');
+                }
+                throw new Error(`Request failed: ${response.status} ${response.statusText}`);
             }
             
-            return await response.json();
+            const text = await response.text();
+            return text ? JSON.parse(text) : null;
         } catch (error) {
             console.error('API Error:', error);
             throw error;
